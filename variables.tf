@@ -14,8 +14,20 @@ variable "tags" {
   default = ["owner:ryantiffany", "project:rtlg"]
 }
 
-variable "pdns_instance" {}
-variable "zone_id" {}
+variable "pdns_instance" {
+    type        = string
+  description = "Private DNS Instance ID."
+  default     = ""
+}
+
+variable "zone_id" {
+    type        = string
+  description = "Private DNS Zone ID."
+  default     = ""
+}
+
 variable "name" {
+    type        = string
+  description = "Name to append to resources."
   default = "lgv1"
 }
