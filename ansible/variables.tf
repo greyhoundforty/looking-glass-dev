@@ -1,0 +1,2 @@
+variable "workspace" {}
+variable "instances" {}
