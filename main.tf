@@ -69,8 +69,8 @@ resource "ibm_dns_resource_record" "instance" {
   ttl         = 3600
 }
 
-module "ansible" {
-  source    = "./ansible"
-  workspace = terraform.workspace
-  instances = module.instance[*].instance
-}
+# module "ansible" {
+#   source    = "./ansible"
+#   workspace = terraform.workspace
+#   instances = module.instance[*].instance
+# }
