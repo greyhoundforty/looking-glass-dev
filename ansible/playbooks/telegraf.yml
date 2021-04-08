@@ -1,0 +1,37 @@
+---
+  - hosts: all
+    tasks:
+    - name: Add Telegraf apt-key to systems
+      apt_key:
+        url: https://repos.influxdata.com/influxdb.key
+        state: present
+    - name: Add Telegraf repo to systems
+      apt_repository:
+        repo: deb https://repos.influxdata.com/ubuntu {{ ansible_lsb.codename }} stable
+    - name: Install Telegraf on systems
+      apt:
+        name: telegraf
+        state: present
+        update_cache: yes
+    - name: Set open files limit in telegraf service file
+      blockinfile:
+        path: /etc/hosts
+        insertafter: "KillMode=control-group"
+        block: "LimitNOFILE=4096"
+    - name: Make sure correct ping is installed
+      apt:
+        name: iputils-ping
+        state: present
+    - name: Add telegraf configuration to systems
+      copy:
+        src: ../templates/telegraf.conf
+        dest: /etc/telegraf/telegraf.conf
+        backup: yes
+        owner: root
+        group: root
+        mode: '0644'
+    - name: Restart telegraf to pick up changes
+      systemd:
+        name: telegraf
+        state: restarted
+        daemon_reload: yes

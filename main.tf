@@ -5,13 +5,13 @@ module "vpc" {
   tags           = concat(var.tags, ["region:${var.region}"])
 }
 
-resource "ibm_dns_permitted_network" "vpc" {
-  depends_on  = [module.vpc]
-  instance_id = var.pdns_instance
-  zone_id     = var.zone_id
-  vpc_crn     = module.vpc.crn
-  type        = "vpc"
-}
+# resource "ibm_dns_permitted_network" "vpc" {
+#   depends_on  = [module.vpc]
+#   instance_id = var.pdns_instance
+#   zone_id     = var.zone_id
+#   vpc_crn     = module.vpc.crn
+#   type        = "vpc"
+# }
 
 resource "ibm_tg_connection" "vpc" {
   depends_on   = [module.vpc]
